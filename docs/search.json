@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Daily Mean Temperature",
+    "section": "",
+    "text": "This chart shows the daily mean temperatures from the HadCET dataset."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hello!"
+  }
+]

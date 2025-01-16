@@ -1,0 +1,38 @@
+name: Update Temperature Chart
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Every Monday at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install notebook matplotlib pandas requests
+
+      - name: Install Quarto
+        run: |
+          curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+          sudo apt install ./quarto-linux-amd64.deb
+
+      - name: Render Quarto Site
+        run: quarto render
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Update temperature chart"
+          git push

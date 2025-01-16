@@ -1,0 +1,42 @@
+---
+title: "Daily Mean Temperature"
+format: html
+execute:
+  enabled: true
+---
+
+This chart shows the daily mean temperatures from the HadCET dataset.
+
+```{python}
+#| echo: false
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import requests
+
+# Download data
+url = "https://hadleyserver.metoffice.gov.uk/hadcet/data/meantemp_daily_totals.txt"
+response = requests.get(url)
+data = response.text
+
+# Parse the data into a DataFrame
+from io import StringIO
+df = pd.read_csv(StringIO(data), sep=r'\s+')
+
+# Rename columns for clarity (if needed)
+df.columns = ["Date", "Temperature"]
+
+# Convert the 'Date' column to datetime
+df["Date"] = pd.to_datetime(df["Date"])
+
+# Plot the data
+plt.figure(figsize=(8.5, 4.5)) 
+plt.plot(df["Date"], df["Temperature"], label="Daily Mean Temperature")
+plt.title("Daily Mean Temperature (HadCET Dataset)")
+plt.xlabel("Date")
+plt.ylabel("Temperature (°C)")
+plt.legend()
+plt.grid()
+plt.tight_layout()
+plt.show()
+```
